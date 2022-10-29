@@ -2,6 +2,8 @@ package com.example.service;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -16,22 +18,29 @@ import com.example.repository.AdminRepository;
 
 @Scope("singleton")
 @Service("adminService")
-public class AdminService {
+public class AdminService implements AdminServiceimp{
 
 	@Autowired
 	@Qualifier("adminRepository")
 	private AdminRepository repo;
 	
-	public Admin saveAdmin(Admin admin){
-		return repo.save(admin);
-		}
-	public Admin fetchAdminByEmailId(String email)
-	{
-		return repo.findByEmailId(email);
+	@Override
+	public List<Admin> findAll() {
+		return repo.findAll();
+	}
+	@Override
+	public Admin findByEmail(String emailId) {
+		return repo.findByEmailId(emailId);
+	}
+	@Override
+	public void save(Admin admin) {
+		repo.save(admin);
+		
+	}
+	@Override
+	public Admin findByEmailIdAndPassword(String emailId, String password) {
+		return repo.findByEmailIdAndPassword(emailId, password);
 	}
 	
-	public Admin fetchAdminByEmailIdandPassword(String email, String password)
-	{
-		return repo.findByEmailIdAndPassword(email, password);
-	}
+	
 }
