@@ -1,9 +1,12 @@
 package com.example.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +42,7 @@ public class AdminController {
 		Admin adminObj = null;
 		if(tempEmailId != null && tempPass != null ) {
 			
-			adminObj = adminservice.fetchAdminByEmailIdandPassword(tempEmailId, tempPass);
+			adminObj = adminservice.findByEmailIdAndPassword(tempEmailId, tempPass);
 					
 		}
 		if(adminObj ==null) {
@@ -48,6 +51,12 @@ public class AdminController {
 			
 		return adminObj;
 	
+	}
+    
+    @HystrixCommand
+	@GetMapping(value="/findall" ,produces={MediaType.APPLICATION_JSON_VALUE})
+	public List<Admin> findAll(){
+		return adminservice.findAll();
 	}
 
 }
