@@ -10,8 +10,8 @@ import com.example.entity.Admin;
 
 public interface AdminServiceimp {
 
-	List<Admin> findByRole(String user);
 	Admin findByEmail(String user);
 	void save(Admin admin);
 	List<Admin> findAll();
+	Admin findByEmailIdAndPassword(String emailId, String password);
 }
